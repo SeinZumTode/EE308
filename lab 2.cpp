@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <stack>
 
 using namespace std;
 
@@ -35,9 +36,12 @@ int main(){
 	int switch_num=0;
 	int total=0;
 	int case_num=0;
+	int if_else_num=0;
+	int if_elseif_if_num=0;
     vector<string> KW;
     vector<string> code;
     vector<int> casenum;
+    stack<int> mystack;
     
     
     stringstream stringin(kw);
@@ -70,6 +74,26 @@ int main(){
 			else if(str.find("default") != string::npos){
 				casenum.push_back(case_num);
 			}
+			
+			
+			
+   		if(str.find("else if")!=string::npos){
+   			mystack.push(2);
+   		}else if(str.find("if")!=string::npos){
+   			mystack.push(1);
+   		}else if(str.find("else")!=string::npos){
+            if(mystack.top() == 1){
+                mystack.pop();
+                if_else_num++;
+                continue;
+            }
+            while(mystack.top() == 2) {
+                mystack.pop();
+            }
+            mystack.pop();
+            if_elseif_if_num++;
+		}
+				
 		
         	str1=replace_all(str, "{", " ");
         	str1=replace_all(str, "}", " ");
@@ -107,9 +131,24 @@ int main(){
 			}
 		
 		}
-        
-        
-        
+		if(level==3){
+			cout<< "Total num: "<< total <<"\n"
+			<<"Switch num: " << switch_num <<"\n"<<"Case num: ";
+		    for(int n=0;n<casenum.size();n++){
+		    	cout<<casenum[n]<<" ";
+			}
+			cout <<endl<< "if else num: " << if_else_num << endl;
+		}
+		
+		if(level==4){
+			cout<< "Total num: "<< total <<"\n"
+			<<"Switch num: " << switch_num <<"\n"<<"Case num: ";
+		    for(int n=0;n<casenum.size();n++){
+		    	cout<<casenum[n]<<" ";
+			}
+			cout <<endl<< "if else num: " << if_else_num << endl;
+	        cout << "if else-if else num: " << if_elseif_if_num << endl;
+		}
 
 }
 
