@@ -75,7 +75,7 @@
 <!-- 展示视图 -->
 <view class="flex-container"> 
     <view class="result" style="visibility:{{isShow}}">
-        
+        <text>现在进行游戏的是：{{rank}}号玩家</text>
     </view>
     <view class="second-row">
         <view class="dice-box">

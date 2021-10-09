@@ -1,6 +1,9 @@
 {
     "pages": [
-        "pages/index/index"
+        "pages/cover/cover",
+        "pages/index/index",
+        "pages/index_multi-player/index_multi-player"
+       
     ],
     "window": {
         "navigationBarBackgroundColor": "#333333",

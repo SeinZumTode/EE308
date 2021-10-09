@@ -1,0 +1,9 @@
+<view class = "container">
+  <text class ="user-name">开始中秋博饼吧！</text>
+  <view class = "moto-container" bindtap="enterPoster_single">
+    <text class = "moto">单人模式</text>
+  </view>
+  <view class = "moto-container" bindtap="enterPoster_multi">
+    <text class = "moto">多人模式</text>
+  </view>
+</view>

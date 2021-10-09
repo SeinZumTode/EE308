@@ -1,3 +1,4 @@
+// pages/index_multi-player/index_multi-player.js
 Page({
     global : {
         timer : null ,
@@ -14,7 +15,9 @@ Page({
       num4 : 3,
       num5 : 3,
       num6 : 3,
-      total: 0
+      total: 0,
+      result : [0, 0, 0],
+      rank: 0
     },
     shakeClick: function () { 
       let me = this;
@@ -35,9 +38,13 @@ Page({
           me.setData({num6 : num6});
           me.setData({total : num1+num2+num3+num4+num5+num6+6});
         },50);
-      } else {
-        clearInterval(this.global.timer);
 
+        
+        this.setData({
+          rank: this.data.rank + 1
+        });
+      } else{
+        clearInterval(this.global.timer);
         var arr = [this.data.num1+1,this.data.num2+1,this.data.num3+1,this.data.num4+1,this.data.num5+1,this.data.num6+1];
 
           //冒泡排序
@@ -49,8 +56,8 @@ Page({
                     arr[j + 1] = temp;
                 }
             } 
-        }
-       var str = arr[0]+""+arr[1]+""+arr[2]+""+arr[3]+""+arr[4]+""+arr[5];
+          }
+        var str = arr[0]+""+arr[1]+""+arr[2]+""+arr[3]+""+arr[4]+""+arr[5];
        
         
         var re = ["114444","444444","111111","222222|333333|555555|666666","444446","344444","244444","144444","111116|222226|333336|555556","111115|222225|333335|566666","111114|222224|333334|455555|466666","111113|222223|355555|366666","111112|233333|255555|266666","122222|133333|155555|166666","444466","444456","444455","344446","244446|344445","144446|244445|344444","144445|244444|334444","234444","13[4]{4}|22[4]{4}","124444","123456","[^4]*[4]{3}[^4]*","44[5]{4}|44[6]{4}|[1]{4}44|[2]{4}44|[3]{4}44","[1]{4}.*4.*|.*[2]{4}.*4.*|.*[3]{4}.*4.*|.*4.*[5]{4}.*|.*4.*[6]{4}","[^4]*[1]{4}[^4]*|[^4]*[2]{4}[^4]*|[^4]*[3]{4}[^4]*|[^4]*[5]{4}[^4]*|[^4]*[6]{4}[^4]*","[^4]*[4]{2}[^4]*","[^4]*[4]{1}[^4]*"];
@@ -70,26 +77,54 @@ Page({
         if(num == -1){
           num = show.length - 1;
         }
-
-        wx.showModal({
-          title: '结果',
-          content: '您的结果是：'+show[num],
-          success: function (res) {
-            if (res.confirm) {
-              console.log('用户点击确定')
-            } else {
-              console.log('用户点击取消')
-            }
+        var temp_str='result['+(this.data.rank-1)+']';
+        this.setData({
+          [temp_str] : num,
+        });
+        if (this.data.rank == 3){
+          function finMinIndex(arr,start){   
+            var oMin=arr[start]; 
+            var oMinIndex=start; 
+            
+            for(var i=0;i<arr.length; i++){   
+              if(arr[i]<oMin){   
+                console.log(oMin);
+                oMin=arr[i] 
+                oMinIndex=i; 
+              } 
+            } 
+            return oMinIndex 
           }
-        })
-        
-        
+          console.log(this.data.result);
+          console.log('最小值是：'+this.data.result[finMinIndex(this.data.result,0)]+',所在的位置是第'+finMinIndex(this.data.result,0)+'个');
+  
+          var result_Rank = finMinIndex(this.data.result,0) + 1;
+          wx.showModal({
+            title: '多人模式结果',
+            content: this.data.rank+'号玩家的结果是: '+show[num] 
+            +'\n本次游戏胜利者是：'+result_Rank+'号玩家',
+          })
+          this.setData({
+            rank: 0
+          });
+        }else{
+          wx.showModal({
+            title: '结果',
+            content: this.data.rank+'号玩家的结果是:\r\n'+show[num],
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
       }
-
       this.setData({
         dice: this.data.dice, 
         buttonType : (this.global.isRand) ? 'default' : 'primary',
-        isShow: (this.global.isRand) ? 'hidden':'show',
+        isShow: (this.global.isRand) ? 'show':'hidden',
       });
   
     },
