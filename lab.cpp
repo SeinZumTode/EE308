@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <cstdlib>
 #include <time.h>
 
 using namespace std;
@@ -52,7 +52,7 @@ int main(){
     cin >> grade;
     cout << "Please enter the number of questions?" << endl;
     cin >> question_num;
-        if(grade == 2){
+        if(grade == 1){
             Grade1_to_Gade2(question_num);
         }
     return 0;
