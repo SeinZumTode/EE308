@@ -3,7 +3,69 @@
 #include <stdlib.h>
 #include <time.h>
 using namespace std;
+int grade3to4(int num){#include <iostream> 
+#include <stdlib.h>
+#include <time.h>
+using namespace std;
 int grade3to4(int num){
+	int a,b,c,i,score=0;
+    double result,result1;  
+    char str; 
+	for(i=0;i<num;i++){
+		srand((unsigned)time(NULL));
+        a=rand()%1000;
+        b=rand()%1000;
+        c=rand()%4;
+        switch(c)  
+        {  
+        case 0:  
+            str='+';  
+            result=a+b;  
+            break;  
+        case 1:  
+            str='-';  
+            result=a-b;  
+            break;  
+        case 2:  
+            str='*';  
+            result=a*b;  
+            break;  
+        case 3:  
+            str='/';
+            result=a/b;
+            while(result<1){
+            	a=rand()%100;
+                b=rand()%100;
+                result=a/b;
+			}
+            break;
+        }
+        cout<<a<<str<<b<<"=?"<<endl;  
+        cin>>result1;  
+        if(result1==result){
+        	score=100/num+score;
+        }
+    }
+    if(score==100){
+    	cout<<"end! All right, that's great! Your score is 100."<<endl; 
+	}
+    else{
+    	cout<<"end! Wrong question, your score is "<<score<<" ."<<endl;
+	}
+    return 0;
+}
+int main(){
+	int grade,num;
+	cout<<"please enter your grade?"<<endl;
+	cin>>grade;
+	cout<<"please enter the number of questions?"<<endl;
+	cin>>num;
+	if(grade==3||grade==4){
+		grade3to4(num);
+	}
+	return 0;
+}
+
 	int a,b,c,i,score=0;
     double result,result1;  
     char str; 
